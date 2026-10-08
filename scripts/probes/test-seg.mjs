@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 // Sanity test for yolo26n-seg: verify output shape + probe row layout by
 // looking at the first row's values. Prints top detections with decoded box
 // + score + class + mask summary so we know the post-proc math is correct.
@@ -20,7 +21,9 @@ const COCO = [
   "scissors", "teddy bear", "hair drier", "toothbrush",
 ];
 
-const MODEL = "<repo>/public/models/yolo26n-seg.onnx";
+const MODEL =
+  process.env.OMNI_MODEL ??
+  fileURLToPath(new URL("../../public/models/yolo26n-seg.onnx", import.meta.url));
 const IMG = process.argv[2] ?? "/tmp/bus.jpg";
 const SIZE = 640;
 const CONF = 0.25;

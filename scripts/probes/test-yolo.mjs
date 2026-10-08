@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 // Sanity test: load YOLO26n, run on a real image, print top-K detections.
 // Verifies (a) the model loads, (b) input/output shapes match expectations,
 // (c) the coordinate system we use in lib/yolo.ts produces sane boxes.
@@ -21,7 +22,9 @@ const COCO = [
   "scissors", "teddy bear", "hair drier", "toothbrush",
 ];
 
-const MODEL = "<repo>/public/models/yolo26n.onnx";
+const MODEL =
+  process.env.OMNI_MODEL ??
+  fileURLToPath(new URL("../../public/models/yolo26n.onnx", import.meta.url));
 const IMG = process.argv[2] ?? "/tmp/bus.jpg";
 const SIZE = 640;
 const CONF = 0.15;

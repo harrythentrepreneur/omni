@@ -23,7 +23,7 @@ ipconfig getifaddr en0
 ## Start the backend (parent app) bound to LAN
 
 ```sh
-cd <repo>
+cd path/to/omni   # the repo root
 npm run dev -- -H 0.0.0.0 -p 3000
 ```
 
@@ -44,7 +44,7 @@ restart it.
 ## Point the native app at the backend
 
 ```sh
-cd <repo>/react-native-executorch
+cd react-native-executorch   # from the repo root
 cp .env.example .env
 # edit .env and set EXPO_PUBLIC_API_BASE=http://192.168.1.42:3000
 #   ^ use the IP you got from ipconfig, NOT localhost

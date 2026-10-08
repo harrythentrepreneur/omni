@@ -348,7 +348,11 @@ const COPY: Record<Lang, Copy> = {
 };
 
 const GITHUB_URL = "https://github.com/OpenBitX/duidui";
-const CDN = "https://assets.example.com/omni/landing";
+// Optional CDN for the heavy landing videos (see .env.example). When unset,
+// the page serves the copies bundled in public/landing instead.
+const ASSET_BASE = (process.env.NEXT_PUBLIC_ASSET_BASE_URL ?? "").replace(/\/+$/, "");
+const assetUrl = (name: string, localExt = "mp4") =>
+  ASSET_BASE ? `${ASSET_BASE}/${name}.mp4` : `/landing/${name}.${localExt}`;
 
 export default function LandingContent() {
   const [lang, setLang] = useState<Lang>("cn");
@@ -564,7 +568,7 @@ export default function LandingContent() {
               />
               <div className="relative overflow-hidden rounded-[22px] bg-white/80 p-1.5 shadow-[0_20px_40px_-22px_rgba(42,21,64,0.4)] ring-1 ring-white/80 backdrop-blur-md">
                 <video
-                  src={`${CDN}/tapnow.mp4`}
+                  src={assetUrl("tapnow")}
                   poster="/landing/chat-with-anything.jpg"
                   controls
                   playsInline
@@ -718,7 +722,7 @@ export default function LandingContent() {
                   playsInline
                   preload="metadata"
                   className="aspect-[9/16] h-auto w-full object-cover"
-                  src={`${CDN}/${name}.mp4`}
+                  src={assetUrl(name, "mov")}
                 />
                 <div
                   aria-hidden
